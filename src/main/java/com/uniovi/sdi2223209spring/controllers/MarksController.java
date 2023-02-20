@@ -21,6 +21,12 @@ public class MarksController {
         //return marksService.getMarks().toString();
     }
 
+    @RequestMapping
+    public String updateList(Model model){
+        model.addAttribute("markList", marksService.getMarks());
+        return "mark/list :: tableMarks";
+    }
+
     /**
      * @RequestMapping(value = "/mark/add", method = RequestMethod.POST)
      * public String setMark(@RequestParam String description, @RequestParam String score) {
