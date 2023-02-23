@@ -2,9 +2,10 @@ package com.uniovi.sdi2223209spring.services;
 
 import com.uniovi.sdi2223209spring.entities.Mark;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import com.uniovi.sdi2223209spring.repositories.MarksRepository;
-
+import org.springframework.data.domain.Pageable;
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -34,6 +35,7 @@ public class MarksService {
     public void deleteMark(Long id) {
         marksRepository.deleteById(id);
     }
+
     /*
     private List<Mark> marksList = new LinkedList<>();
 

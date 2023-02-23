@@ -3,9 +3,12 @@ package com.uniovi.sdi2223209spring.controllers;
 import com.uniovi.sdi2223209spring.services.MarksService;
 import com.uniovi.sdi2223209spring.entities.Mark;
 import com.uniovi.sdi2223209spring.services.UsersService;
+import com.uniovi.sdi2223209spring.validators.MarksFormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -16,6 +19,9 @@ public class MarksController {
 
     @Autowired
     private UsersService usersService;
+
+    @Autowired
+    private MarksFormValidator marksFormValidator;
 
     @RequestMapping("/mark/list")
     public String getList(Model model) {
@@ -38,11 +44,29 @@ public class MarksController {
      * }
      */
 
-    @RequestMapping(value = "/mark/add", method = RequestMethod.POST)
-    public String setMark(@ModelAttribute Mark mark) {
+    //@RequestMapping(value = "/mark/add", method = RequestMethod.POST)
+    //public String setMark(@ModelAttribute Mark mark) {
         //return "added: " + mark.getDescription() + " with score : " + mark.getScore() + " id: " + mark.getId();
-        marksService.addMark(mark);
+        //marksService.addMark(mark);
         //return "Ok";
+      //  return "redirect:/mark/list";
+    //}
+
+    @RequestMapping(value = "/mark/add", method = RequestMethod.GET)
+    public String setMark(Model model) {
+        model.addAttribute("mark", new Mark());
+        model.addAttribute("usersList", usersService.getUsers());
+        return "mark/add";
+    }
+
+    @RequestMapping(value="/mark/add", method=RequestMethod.POST)
+    public String setMark(Model model, @Validated Mark mark, BindingResult result) {
+        model.addAttribute("mark", mark);
+        model.addAttribute("usersList", usersService.getUsers());
+        marksFormValidator.validate(mark, result);
+        if (result.hasErrors()) return "/mark/add";
+
+        marksService.addMark(mark);
         return "redirect:/mark/list";
     }
 

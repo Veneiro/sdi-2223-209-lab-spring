@@ -14,11 +14,12 @@ import java.util.List;
 public class TeacherService {
 
     private List<Teacher> teacherList = new LinkedList<>();
-    //@Autowired
-    //private TeacherRepository teacherRepository;
+    @Autowired
+    private TeacherRepository teacherRepository;
 
     @PostConstruct
     public void init(){
+        //teacherRepository.save(new Teacher("27483658Y", "Pepe", "Rodríguez", "Ciencias"));
         teacherList.add(new Teacher("27483658Y", "Pepe", "Rodríguez", "Ciencias"));
     }
     public List<Teacher> getTeachers(){
@@ -44,6 +45,16 @@ public class TeacherService {
     public void deleteTeacher(String dni){
         //teacherRepository.deleteById(dni);
         teacherList.removeIf(teacher -> teacher.getDni().equals(dni));
+    }
+
+    public Teacher getTeacherByDni(String dni){
+        for (Teacher t: teacherList) {
+            if(t.getDni().equals(dni)){
+                return t;
+            }
+        }
+        return null;
+        //return teacherRepository.findByDni(dni);
     }
 
 
