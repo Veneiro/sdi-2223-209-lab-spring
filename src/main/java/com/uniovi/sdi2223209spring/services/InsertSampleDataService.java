@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 import com.uniovi.sdi2223209spring.entities.Mark;
 import com.uniovi.sdi2223209spring.entities.User;
 
-//@Service
+@Service
 public class InsertSampleDataService {
-    //@Autowired
+    @Autowired
     private UsersService usersService;
 
     @PostConstruct

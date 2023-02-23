@@ -36,9 +36,20 @@ public class UsersService {
         usersRepository.save(user);
     }
 
-    public User getUserByDni(String dni) { return usersRepository.findByDni(dni); }
+    public User getUserByDni(String dni) {
+        return usersRepository.findByDni(dni);
+    }
 
     public void deleteUser(Long id) {
         usersRepository.deleteById(id);
+    }
+
+    public void updateUser(User user) {
+        User userInRepository = getUser(user.getId());
+        userInRepository.setDni(user.getDni());
+        userInRepository.setName(user.getName());
+        userInRepository.setLastName(user.getLastName());
+        usersRepository.save(userInRepository);
+
     }
 }
