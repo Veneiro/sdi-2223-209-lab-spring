@@ -1,6 +1,7 @@
 package com.uniovi.sdi2223209spring.services;
 
 import com.uniovi.sdi2223209spring.entities.Mark;
+import com.uniovi.sdi2223209spring.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -49,6 +50,15 @@ public class MarksService {
         if(mark.getUser().getDni().equals(dni) ) {
             marksRepository.updateResend(revised, id);
         }
+    }
+
+    public List<Mark> getMarksForUser(User user) {
+        List<Mark> marks = new ArrayList<>();
+        if (user.getRole().equals("ROLE_STUDENT")) {
+            marks = marksRepository.findAllByUser(user);}
+        if (user.getRole().equals("ROLE_PROFESSOR")) {
+            marks = getMarks(); }
+        return marks;
     }
 
     /*
