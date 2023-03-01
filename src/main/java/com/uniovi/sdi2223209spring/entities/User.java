@@ -14,9 +14,9 @@ public class User {
     private String name;
     private String lastName;
     private String password;
+    private String role;
     @Transient //propiedad que no se almacena en la tabla.
     private String passwordConfirm;
-    private String role;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Mark> marks;
 
@@ -29,7 +29,12 @@ public class User {
 
     public User() {
     }
-
+    public String getRole() {
+        return role;
+    }
+    public void setRole(String role) {
+        this.role = role;
+    }
     public long getId() {
         return id;
     }
