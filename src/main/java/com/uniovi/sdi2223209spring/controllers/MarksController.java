@@ -10,21 +10,29 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import javax.servlet.http.HttpSession;
+import java.util.HashSet;
+import java.util.Set;
 
 @Controller
 public class MarksController {
 
     @Autowired //Inyectar el servicio
     private MarksService marksService;
-
+    @Autowired
+    private HttpSession httpSession;
     @Autowired
     private UsersService usersService;
-
     @Autowired
     private MarksFormValidator marksFormValidator;
 
     @RequestMapping("/mark/list")
     public String getList(Model model) {
+        Set<Mark> consultedList= (Set<Mark>) httpSession.getAttribute("consultedList");
+        if ( consultedList == null ) {
+            consultedList = new HashSet<Mark>();
+        }
+        model.addAttribute("consultedList", consultedList);
         model.addAttribute("markList", marksService.getMarks());
         return "mark/list";
         //return "Getting List";
