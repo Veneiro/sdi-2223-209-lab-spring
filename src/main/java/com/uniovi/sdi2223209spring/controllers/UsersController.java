@@ -1,8 +1,12 @@
 package com.uniovi.sdi2223209spring.controllers;
 
+import com.uniovi.sdi2223209spring.services.MarksService;
 import com.uniovi.sdi2223209spring.services.RolesService;
 import com.uniovi.sdi2223209spring.services.SecurityService;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -13,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import com.uniovi.sdi2223209spring.entities.*;
 import com.uniovi.sdi2223209spring.services.UsersService;
 import com.uniovi.sdi2223209spring.validators.SignUpFormValidator;
+
+import java.util.LinkedList;
 
 @Controller
 public class UsersController {
@@ -27,6 +33,9 @@ public class UsersController {
 
     @Autowired
     private RolesService rolesService;
+
+    @Autowired //Inyectar el servicio
+    private MarksService marksService;
 
     @RequestMapping(value="/signup", method= RequestMethod.POST)
     public String signup(@Validated User user, BindingResult result){
@@ -59,11 +68,15 @@ public class UsersController {
     }
 
     @RequestMapping(value = {"/home"}, method = RequestMethod.GET)
-    public String home(Model model) {
+    public String home(Model model, Pageable pageable) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String dni = auth.getName();
         User activeUser = usersService.getUserByDni(dni);
-        model.addAttribute("markList", activeUser.getMarks());
+        Page<Mark> marks = new PageImpl<Mark>(new LinkedList<Mark>());
+        marks = marksService.getMarksForUser(pageable, activeUser);
+        model.addAttribute("markList", marks.getContent());
+        model.addAttribute("page", marks);
+        //model.addAttribute("markList", activeUser.getMarks());
         return "home";
     }
 
