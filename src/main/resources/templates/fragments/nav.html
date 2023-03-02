@@ -31,15 +31,15 @@
                 </div>
             </li>
 
-            <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
+            <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="profesorDropdown"
                    role="button" data-toggle="dropdown" aria-haspopup="true"
                    aria-expanded="false"> Gestión de profesores </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="/teacher/list">Ver profesores</a>
-                    <a class="dropdown-item" href="/teacher/add">Añadir profesores</a>
-                    <a class="dropdown-item" href="/teacher/delete">Borrar profesores</a>
-                    <a class="dropdown-item" href="/teacher/details">Detalles profesores</a>
+                    <a class="dropdown-item" href="/teacher/add" sec:authorize="hasRole('ROLE_ADMIN')">Añadir profesores</a>
+                    <a class="dropdown-item" href="/teacher/delete" sec:authorize="hasRole('ROLE_ADMIN')">Borrar profesores</a>
+                    <!--a class="dropdown-item" href="/teacher/details">Detalles profesores</a-->
                 </div>
             </li>
         </ul>

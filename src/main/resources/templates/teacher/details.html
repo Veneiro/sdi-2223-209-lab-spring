@@ -9,16 +9,28 @@
 <div class="container" id="main-container">
     <h2>Detalles de la nota</h2>
     <div class="card">
-        <div class="card-header">Descripción</div>
+        <div class="card-header">Dni</div>
         <div class="card-body">
-            <p class="card-text" th:text="${mark.description}"> Ejercicio 1</p>
+            <p class="card-text" th:text="${teacher.dni}"> dni</p>
         </div>
     </div>
     <br>
     <div class="card">
-        <div class="card-header">Puntuación</div>
+        <div class="card-header">Name</div>
         <div class="card-body">
-            <p class="card-text" th:text="${mark.score}">100</p>
+            <p class="card-text" th:text="${teacher.name}"> name</p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">Surname</div>
+        <div class="card-body">
+            <p class="card-text" th:text="${teacher.surname}"> surname</p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">Category</div>
+        <div class="card-body">
+            <p class="card-text" th:text="${teacher.category}"> category</p>
         </div>
     </div>
 </div>
