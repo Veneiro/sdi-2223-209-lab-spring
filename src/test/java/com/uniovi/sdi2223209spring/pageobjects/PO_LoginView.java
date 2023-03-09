@@ -23,6 +23,7 @@ public class PO_LoginView extends PO_NavView{
         clickOption(driver, "logout", "text", loginText);
     }
 
+
     public static void checkLogin(WebDriver driver, String dni, String password, String textToCheck) {
         clickOption(driver, "login", "class", "btn btn-primary");
         fillLoginForm(driver, dni, password);
